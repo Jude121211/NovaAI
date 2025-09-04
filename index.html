@@ -91,17 +91,18 @@ function addMessage(text,cls){
   messagesDiv.scrollTop=messagesDiv.scrollHeight;
 }
 
-// Free AI API: via free server (replace with your server URL)
+// Free AI API: via serverless function
 async function getAIResponse(prompt){
   try{
-   const response = await fetch('https://nova-ai-henna.vercel.app/api/ask', {
-  method: 'POST',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({ prompt: text })
-});
+    const response = await fetch('https://nova-ai-henna.vercel.app/api/ask', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ prompt: prompt }) // <- FIXED variable
+    });
     const data = await response.json();
     return data.answer;
   }catch(e){
+    console.error(e);
     return "AI is not available right now.";
   }
 }
